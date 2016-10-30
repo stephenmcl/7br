@@ -28,10 +28,10 @@ sub create_igv_batch_file {
     }
     chop $bam_list; #trailing comma.
     print $fh_OUT "new\n";
-    print $fh_OUT $bam_list . "\n";
+    print $fh_OUT 'load ' . $bam_list . "\n";
     print $fh_OUT 'snapshotDirectory ' . $OUT_DIR . "\n";
     print $fh_OUT 'genome hg19' . "\n";
-    print $fh_OUT 'goto ' . $opt->{'chr'} . ':' . $opt->{'start'} . '-' . $opt->{'stop'};
+    print $fh_OUT 'goto ' . $opt->{'chr'} . ':' . $opt->{'start'} . '-' . $opt->{'stop'} . "\n";
     print $fh_OUT 'sort position' . "\n";
     print $fh_OUT 'collapse' . "\n";
     my $file_name = $opt->{'chr'} . '_' . $opt->{'start'} . '-' . $opt->{'stop'} . '.png';
