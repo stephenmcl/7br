@@ -7,10 +7,14 @@ use Getopt::Long;
 use Pod::Usage;
 use File::Basename;
 use Path::Class qw / dir file /;
+use Cwd;
+use File::Copy;
 
 our $OUT_DIR = '/data/output/IGV/mySnapshotDirectory/';
 our $IGV_JAR = '/IGV/IGV_Snapshot/igv.jar';
 our $JAVA    = 'java';
+our $WORKING_DIR = getcwd();
+$WORKING_DIR = dir($WORKING_DIR)->absolute();
 
 #example command:
 #xvfb-run --server-args="-screen 0, 1024x768x24" java -Xmx1000m -jar /IGV/IGV_Snapshot/igv.jar -b /igv_batch.test
@@ -60,7 +64,10 @@ MAIN_CODE: {
     my $cmd = 'xvfb-run --server-args="-screen 0, 1024x768x24" ' . $JAVA . ' -Xmx900m -jar ' . $IGV_JAR . ' -b ' . $batch_file;
     unless ($opt->{'debug'}) { 
 	system($cmd);
-	print $OUT_DIR . '/' . $opt->{'chr'} . '_' . $opt->{'start'} . '-' . $opt->{'stop'} . '.png';
+	my $screen_shot_file = $OUT_DIR . '/' . $opt->{'chr'} . '_' . $opt->{'start'} . '-' . $opt->{'stop'} . '.png';
+	print $screen_shot_file, "\n";
+	my $destination_file = $WORKING_DIR . '/' . basename($screen_shot_file);
+	copy($screen_shot_file, $destination_file);
     } else {
 	print $cmd, "\n";
     }
