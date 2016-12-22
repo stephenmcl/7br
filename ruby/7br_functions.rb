@@ -1,3 +1,5 @@
+def get_
+
 def make_upload_status_hash()
 	stuff = general_get_multiple('upload/multipart')
 	return_me = Hash.new
