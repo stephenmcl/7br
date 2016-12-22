@@ -1,0 +1,289 @@
+{
+  "class": "CommandLineTool",
+  "stdin": "",
+  "sbg:modifiedBy": "sfmclaugh",
+  "sbg:latestRevision": 13,
+  "hints": [
+    {
+      "class": "sbg:CPURequirement",
+      "value": 4
+    },
+    {
+      "class": "sbg:MemRequirement",
+      "value": 4000
+    },
+    {
+      "class": "DockerRequirement",
+      "dockerPull": "images.sbgenomics.com/sfmclaugh/excavator:v3",
+      "dockerImageId": ""
+    }
+  ],
+  "id": "https://api.sbgenomics.com/v2/apps/sfmclaugh/excavator-sdk-demo/excavator/13/raw/",
+  "sbg:cmdPreview": "perl /opt/EXCAVATOR_one_off.pl -bed_file /opt/EXCAVATOR_Package_v2.2/20130108.exome.targets_WITH_DUMMY_FIELD_NOCHR.bed -out_dir /EXCAVATOR_output/ -cp_wd -test test_file.bam:test -control control_file.bam:control  &&mv ./path/tograb/output/* ./",
+  "sbg:revisionNotes": "crazy javascript mv statement added",
+  "label": "EXCAVATOR",
+  "successCodes": [],
+  "sbg:createdOn": 1481744483,
+  "sbg:sbgMaintained": false,
+  "temporaryFailCodes": [],
+  "inputs": [
+    {
+      "id": "#test",
+      "label": "Exome BAM file, test",
+      "type": [
+        "File"
+      ],
+      "inputBinding": {
+        "valueFrom": {
+          "class": "Expression",
+          "script": "$self.path + \":test\"",
+          "engine": "#cwl-js-engine"
+        },
+        "sbg:cmdInclude": true,
+        "position": 1,
+        "separate": true,
+        "secondaryFiles": [
+          ".bai"
+        ],
+        "prefix": "-test"
+      },
+      "sbg:stageInput": "link"
+    },
+    {
+      "id": "#control",
+      "label": "Exome BAM file, control",
+      "type": [
+        "File"
+      ],
+      "inputBinding": {
+        "valueFrom": {
+          "class": "Expression",
+          "script": "$self.path + \":control\"",
+          "engine": "#cwl-js-engine"
+        },
+        "sbg:cmdInclude": true,
+        "position": 2,
+        "separate": true,
+        "secondaryFiles": [
+          ".bai"
+        ],
+        "prefix": "-control"
+      }
+    }
+  ],
+  "description": "",
+  "requirements": [
+    {
+      "class": "ExpressionEngineRequirement",
+      "requirements": [
+        {
+          "class": "DockerRequirement",
+          "dockerPull": "rabix/js-engine"
+        }
+      ],
+      "id": "#cwl-js-engine"
+    },
+    {
+      "class": "CreateFileRequirement",
+      "fileDef": []
+    }
+  ],
+  "sbg:createdBy": "sfmclaugh",
+  "stdout": "",
+  "baseCommand": [
+    "perl",
+    "/opt/EXCAVATOR_one_off.pl"
+  ],
+  "sbg:modifiedOn": 1481829165,
+  "sbg:image_url": null,
+  "outputs": [
+    {
+      "description": "Plots of entire chromosome",
+      "label": "Chromosome-wide CNV plots",
+      "outputBinding": {
+        "glob": "PlotResults*.pdf"
+      },
+      "sbg:fileTypes": "pdf",
+      "type": [
+        "null",
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ],
+      "id": "#plots"
+    },
+    {
+      "id": "#HSLM",
+      "type": [
+        "null",
+        "File"
+      ],
+      "outputBinding": {
+        "glob": "HSLMResults*.txt"
+      },
+      "sbg:fileTypes": "txt"
+    },
+    {
+      "description": "CNV calls",
+      "label": "FastCall output file",
+      "outputBinding": {
+        "glob": "FastCallResults*.txt"
+      },
+      "sbg:fileTypes": "txt",
+      "type": [
+        "null",
+        "File"
+      ],
+      "id": "#FastCall"
+    }
+  ],
+  "arguments": [
+    {
+      "valueFrom": "/opt/EXCAVATOR_Package_v2.2/20130108.exome.targets_WITH_DUMMY_FIELD_NOCHR.bed",
+      "separate": true,
+      "position": 0,
+      "prefix": "-bed_file"
+    },
+    {
+      "valueFrom": "/EXCAVATOR_output/",
+      "separate": true,
+      "prefix": "-out_dir"
+    },
+    {
+      "valueFrom": "-cp_wd",
+      "separate": false,
+      "prefix": ""
+    },
+    {
+      "valueFrom": {
+        "class": "Expression",
+        "script": "{\n  return \"&&mv ./path/tograb/output/* ./\"\n}",
+        "engine": "#cwl-js-engine"
+      },
+      "separate": true,
+      "position": 10000
+    }
+  ],
+  "sbg:id": "sfmclaugh/excavator-sdk-demo/excavator/13",
+  "sbg:validationErrors": [],
+  "sbg:revisionsInfo": [
+    {
+      "sbg:revisionNotes": null,
+      "sbg:modifiedOn": 1481744483,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 0
+    },
+    {
+      "sbg:revisionNotes": "Getting rid of additional space after main command.",
+      "sbg:modifiedOn": 1481745022,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 1
+    },
+    {
+      "sbg:revisionNotes": "Inputs look good",
+      "sbg:modifiedOn": 1481745964,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 2
+    },
+    {
+      "sbg:revisionNotes": "Adding Docker Repository tag.",
+      "sbg:modifiedOn": 1481748599,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 3
+    },
+    {
+      "sbg:revisionNotes": "Adding output plots.",
+      "sbg:modifiedOn": 1481749876,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 4
+    },
+    {
+      "sbg:revisionNotes": "Adding HSLM output file.",
+      "sbg:modifiedOn": 1481750220,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 5
+    },
+    {
+      "sbg:revisionNotes": "Adding FastCall",
+      "sbg:modifiedOn": 1481750367,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 6
+    },
+    {
+      "sbg:revisionNotes": "changing docker repository to v2.",
+      "sbg:modifiedOn": 1481771852,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 7
+    },
+    {
+      "sbg:revisionNotes": "changing path of EXCAVATOR script for new docker version checkin.",
+      "sbg:modifiedOn": 1481772471,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 8
+    },
+    {
+      "sbg:revisionNotes": "Copying output files to working directory.",
+      "sbg:modifiedOn": 1481776761,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 9
+    },
+    {
+      "sbg:revisionNotes": "changing to images.sbgenomics.com/sfmclaugh/excavator:v3",
+      "sbg:modifiedOn": 1481777177,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 10
+    },
+    {
+      "sbg:revisionNotes": "Getting rid of redundant -cp_wd argument.",
+      "sbg:modifiedOn": 1481816796,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 11
+    },
+    {
+      "sbg:revisionNotes": "Changing test input names.",
+      "sbg:modifiedOn": 1481816944,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 12
+    },
+    {
+      "sbg:revisionNotes": "crazy javascript mv statement added",
+      "sbg:modifiedOn": 1481829165,
+      "sbg:modifiedBy": "sfmclaugh",
+      "sbg:revision": 13
+    }
+  ],
+  "sbg:job": {
+    "inputs": {
+      "control": {
+        "class": "File",
+        "secondaryFiles": [
+          {
+            "path": ".bai"
+          }
+        ],
+        "path": "control_file.bam",
+        "size": 0
+      },
+      "test": {
+        "class": "File",
+        "secondaryFiles": [
+          {
+            "path": ".bai"
+          }
+        ],
+        "path": "test_file.bam",
+        "size": 0
+      }
+    },
+    "allocatedResources": {
+      "cpu": 4,
+      "mem": 4000
+    }
+  },
+  "sbg:contributors": [
+    "sfmclaugh"
+  ],
+  "sbg:project": "sfmclaugh/excavator-sdk-demo",
+  "sbg:revision": 13
+}
