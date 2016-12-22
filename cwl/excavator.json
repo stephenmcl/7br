@@ -114,7 +114,7 @@
     {
       "class": "DockerRequirement",
       "dockerImageId": "",
-      "dockerPull": "images.sbgenomics.com/sfmclaugh/excavator:v3"
+      "dockerPull": "mclaugsf/excavator:v3"
     }
   ],
   "baseCommand": [
